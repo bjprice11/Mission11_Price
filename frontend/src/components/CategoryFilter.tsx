@@ -2,7 +2,7 @@ import './CategoryFilter.css';
 import { useState, useEffect } from 'react';
 import { apiBase } from '../apiBase';
 
-function CategoryFilter({selectedCategories, setSelectedCategories}: {selectedCategories: string[], setSelectedCategories: (categories: string[]) => void}) {
+function CategoryFilter({selectedCategories, setSelectedCategories, setPageNumber}: {selectedCategories: string[], setSelectedCategories: (categories: string[]) => void, setPageNumber: (pageNumber: number) => void}) {
     const [categories, setCategories] = useState<string[]>([]);
 
     useEffect(() => {
@@ -25,9 +25,9 @@ function CategoryFilter({selectedCategories, setSelectedCategories}: {selectedCa
         : [...selectedCategories, target.target.value];
         console.log("Selected categories:", updatedCategories);
         setSelectedCategories(updatedCategories);
-    };
 
-    sessionStorage.setItem('savedPageNumber', '1');
+        setPageNumber(1);
+    };
 
     return (
         <div className="category-filter">
