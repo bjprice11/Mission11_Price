@@ -25,7 +25,9 @@ function CategoryFilter({selectedCategories, setSelectedCategories}: {selectedCa
         : [...selectedCategories, target.target.value];
         console.log("Selected categories:", updatedCategories);
         setSelectedCategories(updatedCategories);
-    }
+    };
+
+    sessionStorage.setItem('savedPageNumber', '1');
 
     return (
         <div className="category-filter">
@@ -33,8 +35,8 @@ function CategoryFilter({selectedCategories, setSelectedCategories}: {selectedCa
             <div className="category-list">
                 {categories.map((category) => (
                     <div className="category-item" key={category}>
-                        <input type="checkbox" className="category-checkbox" value={category} onChange={handleCategoryChange} />
-                        <label htmlFor={category} className="category-label">{category}</label>
+                        <input type="checkbox" className="category-checkbox" value={category} checked={selectedCategories.includes(category)} onChange={handleCategoryChange} />
+                        <label htmlFor={category} className="category-label" >{category}</label>
                     </div>
                 ))}
             </div>

@@ -5,6 +5,7 @@ const CartSummary = () => {
     const navigate = useNavigate();
     const {cart} = useCart();
     const totalAmount = cart.reduce((sum, item) => sum + item.subtotal, 0);
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     return(<div style= {{
         position: 'fixed',
@@ -19,7 +20,9 @@ const CartSummary = () => {
     }}
         onClick={() => navigate('/cart')}
           > 
-          🛒 <strong>{totalAmount.toFixed(2)}</strong>
+          🛒 <br /> <strong>Total: ${totalAmount.toFixed(2)}</strong>
+          <br />
+          <strong>Quantity:{totalQuantity}</strong>
     </div>
 )
 }

@@ -7,6 +7,7 @@ const CartPage = () => {
     const navigate = useNavigate();
     const {cart, removeFromCart} = useCart();
     const totalAmount = cart.reduce((sum, item) => sum + item.subtotal, 0);
+    const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
     return (
         <div
             className="container py-5"
@@ -22,7 +23,10 @@ const CartPage = () => {
                 >
                     <h2 className="h4 mb-0">Your Cart</h2>
                     <span className="badge text-bg-dark rounded-pill fs-6">
-                        {cart.length} {cart.length === 1 ? 'item' : 'items'}
+                        Total Quantity: {totalQuantity}
+                    </span>
+                    <span className="badge text-bg-dark rounded-pill fs-6">
+                        Total Amount: ${totalAmount.toFixed(2)}
                     </span>
                 </div>
 
@@ -33,7 +37,7 @@ const CartPage = () => {
                             <p className="text-muted mb-4">Browse books and add a few to get started.</p>
                             <button
                                 className="btn btn-primary px-4"
-                                onClick={() => navigate('/books')}
+                                onClick={() => navigate(-1)}
                             >
                                 Continue Shopping
                             </button>
