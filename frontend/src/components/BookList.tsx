@@ -1,25 +1,16 @@
 import {useState, useEffect} from 'react';
 import type {Book} from '../types/Books';
-//import { useNavigate } from 'react-router-dom';
 import { apiBase } from '../apiBase';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 //This is the function that displays the book list
-function BookList({selectedCategories}: {selectedCategories: string[]}) {
+function BookList({selectedCategories, pageNumber, setPageNumber}: {selectedCategories: string[], pageNumber: number, setPageNumber: (pageNumber: number) => void}) {
     //this is the state for the books array
     const [books, setBooks] = useState<Book[]>([]);
     //this is the state for the page size
     const [pageSize, setPageSize] = useState<number>(10);
     //this is the state for the page number
-    const [pageNumber, setPageNumber] = useState<number>(()=>
-        {
-            const savedPage = sessionStorage.getItem('savedPageNumber');
-            return savedPage ? Number(savedPage) : 1;
-        });
-    useEffect(() => {
-        sessionStorage.setItem('savedPageNumber', pageNumber.toString());
-    }, [pageNumber]);
     //this is the state for the total number of pages
     const [totalPages, setTotalPages] = useState<number>(0);
     //this is the state for the sort by title
