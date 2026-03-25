@@ -1,0 +1,1 @@
+export const apiBase = import.meta.env.DEV ? "/api" : "https://localhost:7218";

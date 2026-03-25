@@ -577,11 +577,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/brandonprice/Desktop/Winter 2026/413/Mission10_Price/backend/backend.csproj",
+      "projectUniqueName": "/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/backend.csproj",
       "projectName": "backend",
-      "projectPath": "/Users/brandonprice/Desktop/Winter 2026/413/Mission10_Price/backend/backend.csproj",
+      "projectPath": "/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/backend.csproj",
       "packagesPath": "/Users/brandonprice/.nuget/packages/",
-      "outputPath": "/Users/brandonprice/Desktop/Winter 2026/413/Mission10_Price/backend/obj/",
+      "outputPath": "/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/brandonprice/.nuget/NuGet/NuGet.Config"
