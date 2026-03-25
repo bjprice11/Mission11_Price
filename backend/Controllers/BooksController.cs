@@ -25,14 +25,20 @@ public class BooksController : ControllerBase
     //This is the method that gets the books from the database
     [HttpGet]
     //This is the parameter that gets the books from the database
-    public IActionResult GetBooks(int pageSize = 5, int pageNumber = 1, string orderBy = "")
+    public IActionResult GetBooks(int pageSize = 5, int pageNumber = 1, string orderBy = "", [FromQuery] List<string>? bookCategories = null)
     {
+        var query = _context.Books.AsQueryable();
+
+        if (bookCategories != null && bookCategories.Any())
+        {
+            query = query.Where(b => bookCategories.Contains(b.Category));
+        }
         //This is the total number of books in the database
-        var totalNumBooks = _context.Books.Count();
+        var totalNumBooks = query.Count();
         //This is the method that gets the books from the database in ascending order
         if (orderBy == "ascending")
         {
-            var books = _context.Books
+            var books = query
                 .OrderBy(b => b.Title)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -46,7 +52,7 @@ public class BooksController : ControllerBase
         //This is the method that gets the books from the database in descending order
         if (orderBy == "descending")
         {
-            var books = _context.Books
+            var books = query
                 .OrderByDescending(b => b.Title)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -60,7 +66,7 @@ public class BooksController : ControllerBase
         //This is the method that gets the books from the database in no order
         else
         {
-            var books = _context.Books
+            var books = query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -70,5 +76,14 @@ public class BooksController : ControllerBase
                 TotalNumBooks = totalNumBooks
             });
         }
+    } 
+    [HttpGet("GetBookCategories")]
+     public IActionResult GetBookCategories()
+     {
+         var bookCategories = _context.Books
+             .Select(b => b.Category)
+             .Distinct()
+             .ToList();
+         return Ok(bookCategories);
     }
 }

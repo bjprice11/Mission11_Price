@@ -1,8 +1,12 @@
 import {useState, useEffect} from 'react';
-import type {Book} from './types/Books';
+import type {Book} from '../types/Books';
+//import { useNavigate } from 'react-router-dom';
+import { apiBase } from '../apiBase';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 //This is the function that displays the book list
-function BookList() {
+function BookList({selectedCategories}: {selectedCategories: string[]}) {
     //this is the state for the books array
     const [books, setBooks] = useState<Book[]>([]);
     //this is the state for the page size
@@ -15,24 +19,29 @@ function BookList() {
     const [sortByTitle, setSortByTitle] = useState<boolean>(false);
     //this is the state for the sort direction
     const [sortDirection, setSortDirection] = useState<'ascending' | 'descending'>('ascending');
-
+    //const navigate = useNavigate();
+    const navigate = useNavigate();
+    const { addToCart } = useCart();
     //this gets the book information from the API
     useEffect(() => {
         //async means that the function can be paused and resumed later
         const fetchBooks = async () => {
+            const categoryParam = selectedCategories.map(cat => `bookCategories=${encodeURIComponent(cat)}`).join('&');
             //this is the parameter for the order by
-            const orderByParam = sortByTitle ? `&orderBy=${sortDirection}` : '';
+            const orderByParam = sortByTitle ? `&orderBy=${sortDirection}` : '';            
+            const requestUrl = `${apiBase}/Books?pageSize=${pageSize}&pageNumber=${pageNumber}&orderBy=${orderByParam}${selectedCategories.length > 0 ? `&${categoryParam}` : ''}`;
             //this is the response from the API, using this url and the parameters we set earlier
             const response = await fetch(
-                `https://localhost:7218/Books?pageSize=${pageSize}&pageNumber=${pageNumber}${orderByParam}`
+            `${requestUrl}`
             );
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
             setBooks(data.books);
             setTotalPages(Math.ceil(data.totalNumBooks / pageSize));
         }
         fetchBooks();
         //this is the dependency array for the useEffect hook - this is what causes the function to re-run when the state changes
-    }, [pageSize, pageNumber, sortByTitle, sortDirection]);
+    }, [pageSize, pageNumber, sortByTitle, sortDirection, selectedCategories]);
 
     //What will be displayed on the screen
 return (
@@ -56,6 +65,21 @@ return (
                                 <li><strong>Page Count:</strong> {book.pageCount}</li>
                                 <li><strong>Price:</strong> {book.price}</li>
                             </ul>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                    addToCart({
+                                        bookId: book.bookId,
+                                        title: book.title,
+                                        price: book.price,
+                                        quantity: 1,    
+                                        subtotal: book.price,
+                                    });
+                                    navigate(`/cart/${book.bookId}`);
+                                }}
+                            >
+                                Add to Cart
+                            </button>
                         </div>
                     </div>
                 </div>
