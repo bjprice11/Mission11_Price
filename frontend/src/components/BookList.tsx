@@ -12,13 +12,23 @@ function BookList({selectedCategories}: {selectedCategories: string[]}) {
     //this is the state for the page size
     const [pageSize, setPageSize] = useState<number>(10);
     //this is the state for the page number
-    const [pageNumber, setPageNumber] = useState<number>(1);
+    const [pageNumber, setPageNumber] = useState<number>(()=>
+        {
+            const savedPage = sessionStorage.getItem('savedPageNumber');
+            return savedPage ? Number(savedPage) : 1;
+        });
+    useEffect(() => {
+        sessionStorage.setItem('savedPageNumber', pageNumber.toString());
+    }, [pageNumber]);
     //this is the state for the total number of pages
     const [totalPages, setTotalPages] = useState<number>(0);
     //this is the state for the sort by title
     const [sortByTitle, setSortByTitle] = useState<boolean>(false);
     //this is the state for the sort direction
     const [sortDirection, setSortDirection] = useState<'ascending' | 'descending'>('ascending');
+    // Inside BookList.tsx
+
+
     //const navigate = useNavigate();
     const navigate = useNavigate();
     const { addToCart } = useCart();
