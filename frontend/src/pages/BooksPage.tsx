@@ -4,8 +4,9 @@ import CategoryFilter from '../components/CategoryFilter'
 import WelcomeBand from '../components/WelcomeBand'
 import CartSummary from '../components/CartSummary'
 
+// Owns filter + page state; passes it down to CategoryFilter and BookList as props
 function BooksPage() {
-    // Initialize state from sessionStorage, or default to empty array
+    // Loaded from sessionStorage on first mount only — survives trip to cart and back (same tab)
     const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
         const savedCategories = sessionStorage.getItem('savedCategories');
         return savedCategories ? JSON.parse(savedCategories) : [];
@@ -16,7 +17,6 @@ function BooksPage() {
         return savedPage ? Number(savedPage) : 1;
     });
     
-    // Save to sessionStorage whenever selectedCategories changes
     useEffect(() => {
         sessionStorage.setItem('savedCategories', JSON.stringify(selectedCategories));
     }, [selectedCategories]);
@@ -29,10 +29,13 @@ function BooksPage() {
         <>
             <div className="container">
                 <WelcomeBand/>
-                <div style={{position: 'fixed', top: '20px', right: '20px'}}><CartSummary /></div>
+                <div style={{position: 'fixed', top: '20px', right: '20px'}}>
+                    {/* useCart() inside — no props needed from here */}
+                    <CartSummary />
+                </div>
                 <div className="row">
                 <div className="col-md-3">
-                    {/* 3. Pass setPageNumber down so the filter can reset it */}
+                    {/* From BooksPage state → CategoryFilter; setPageNumber resets list when filters change */}
                     <CategoryFilter 
                         selectedCategories={selectedCategories} 
                         setSelectedCategories={setSelectedCategories} 
@@ -40,7 +43,7 @@ function BooksPage() {
                     />
                 </div>
                 <div className="col-md-9">
-                    {/* 4. Pass pageNumber and setPageNumber down to the list */}
+                    {/* From BooksPage state → BookList; setPageNumber updates page in parent so it persists */}
                     <BookList 
                         selectedCategories={selectedCategories} 
                         pageNumber={pageNumber}
@@ -50,7 +53,7 @@ function BooksPage() {
                 </div>
             </div>
         </>
-        )
-    }
-    
-    export default BooksPage;
+    );
+}
+
+export default BooksPage;

@@ -2,7 +2,14 @@ import './CategoryFilter.css';
 import { useState, useEffect } from 'react';
 import { apiBase } from '../apiBase';
 
-function CategoryFilter({selectedCategories, setSelectedCategories, setPageNumber}: {selectedCategories: string[], setSelectedCategories: (categories: string[]) => void, setPageNumber: (pageNumber: number) => void}) {
+// Props all come from BooksPage — parent owns selectedCategories and pageNumber
+type CategoryFilterProps = {
+    selectedCategories: string[];
+    setSelectedCategories: (categories: string[]) => void;
+    setPageNumber: (pageNumber: number) => void;
+};
+
+function CategoryFilter({selectedCategories, setSelectedCategories, setPageNumber}: CategoryFilterProps) {
     const [categories, setCategories] = useState<string[]>([]);
 
     useEffect(() => {
@@ -26,6 +33,7 @@ function CategoryFilter({selectedCategories, setSelectedCategories, setPageNumbe
         console.log("Selected categories:", updatedCategories);
         setSelectedCategories(updatedCategories);
 
+        // Tells BooksPage to reset page — BookList refetches with new categories from props
         setPageNumber(1);
     };
 
@@ -35,7 +43,8 @@ function CategoryFilter({selectedCategories, setSelectedCategories, setPageNumbe
             <div className="category-list">
                 {categories.map((category) => (
                     <div className="category-item" key={category}>
-                        <input type="checkbox" className="category-checkbox" value={category} checked={selectedCategories.includes(category)} onChange={handleCategoryChange} />
+                        {/* checked/read from BooksPage via selectedCategories prop */}
+                        <input id={category} type="checkbox" className="category-checkbox" value={category} checked={selectedCategories.includes(category)} onChange={handleCategoryChange} />
                         <label htmlFor={category} className="category-label" >{category}</label>
                     </div>
                 ))}

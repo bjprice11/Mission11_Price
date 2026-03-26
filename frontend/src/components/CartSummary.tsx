@@ -1,13 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
+// Rendered on BooksPage — reads cart from CartContext (same store BookList writes to)
 const CartSummary = () => {
     const navigate = useNavigate();
     const {cart} = useCart();
     const totalAmount = cart.reduce((sum, item) => sum + item.subtotal, 0);
     const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    return(<div style= {{
+    return(
+        <div style= {{
         position: 'fixed',
         top: '20px',
         right: '20px',
