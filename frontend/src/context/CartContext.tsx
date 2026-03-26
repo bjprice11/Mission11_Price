@@ -44,8 +44,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         setCart([]);
     };
 
+    // Provider value is what useCart() reads: cart + addToCart, removeFromCart, clearCart
     return (
-        // value={{ ... }} creates a new object each render — that's normal; consumers re-render when cart changes
         <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
             {children}
         </CartContext.Provider>

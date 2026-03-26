@@ -1,20 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
-// Small floating widget — shows cart totals and sends user to cart when clicked
-
-// Rendered in BooksPage inside a fixed-position wrapper (top-right of the viewport)
+// Rendered on BooksPage — reads cart from CartContext (same store BookList writes to)
 const CartSummary = () => {
     const navigate = useNavigate();
-    //Pulls the cart array from the context
     const {cart} = useCart();
-    // sum of all subtotals
     const totalAmount = cart.reduce((sum, item) => sum + item.subtotal, 0);
-    // how many books total including duplicates
     const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
 
     return(
-        // Inline style object 
         <div style= {{
         position: 'fixed',
         top: '20px',
@@ -26,13 +20,10 @@ const CartSummary = () => {
         alignItems: 'center',
         fontSize: '16px',
     }}
-    // Navigates to the cart page
         onClick={() => navigate('/cart')}
           > 
-          {/* Shows the total amount and quantity */}
           🛒 <br /> <strong>Total: ${totalAmount.toFixed(2)}</strong>
           <br />
-          {/* Shows the total quantity */}
           <strong>Quantity:{totalQuantity}</strong>
     </div>
 )

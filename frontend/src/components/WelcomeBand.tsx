@@ -1,5 +1,4 @@
-// Simple presentational component — no state, no props; just static markup at the top of BooksPage
-// The class "welcome-bar" can be styled in App.css or index.css if you want a colored banner
+// Static header for BooksPage — no props, no state
 function WelcomeBand() {
     return (
         <div className="welcome-bar">
