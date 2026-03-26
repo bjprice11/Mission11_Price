@@ -1,3 +1,4 @@
+/* Layout for the left-column category checkboxes on BooksPage */
 .category-filter {
     display: flex;
     flex-direction: column;
@@ -17,6 +18,7 @@
     gap: 8px;
 }
 
+/* Fixed size so rows line up even if label text wraps on small screens */
 .category-checkbox{
     flex-shrink: 0;
     width: 16px;
