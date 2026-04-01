@@ -4,13 +4,17 @@ import CategoryFilter from '../components/CategoryFilter'
 import WelcomeBand from '../components/WelcomeBand'
 import CartSummary from '../components/CartSummary'
 
+
+
 // Owns filter + page state; passes it down to CategoryFilter and BookList as props
 function BooksPage() {
+
     // Loaded from sessionStorage on first mount only — survives trip to cart and back (same tab)
     const [selectedCategories, setSelectedCategories] = useState<string[]>(() => {
         const savedCategories = sessionStorage.getItem('savedCategories');
         return savedCategories ? JSON.parse(savedCategories) : [];
     });
+
 
     const [pageNumber, setPageNumber] = useState<number>(() => {
         const savedPage = sessionStorage.getItem('savedPageNumber');

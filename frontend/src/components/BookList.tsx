@@ -3,6 +3,11 @@ import type {Book} from '../types/Books';
 import { apiBase } from '../apiBase';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { deleteBook } from '../api/BooksAPI';
+import NewBookForm from './NewBookForm';
+import EditBookForm from './EditBookForm';
+import { fetchBooks } from '../api/BooksAPI';
+
 
 // Props from BooksPage — selectedCategories + pageNumber stay in sync with sessionStorage there
 type BookListProps = {
@@ -18,11 +23,25 @@ function BookList({ selectedCategories, pageNumber, setPageNumber }: BookListPro
     const [totalPages, setTotalPages] = useState<number>(0);
     const [sortByTitle, setSortByTitle] = useState<boolean>(false);
     const [sortDirection, setSortDirection] = useState<'ascending' | 'descending'>('ascending');
-    
+    const [editingBook, setEditingBook] = useState<Book | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true); 
-
+    const [showForm, setShowForm] = useState<boolean>(false);
     const navigate = useNavigate();
     const { addToCart } = useCart();
+
+    const handleDelete = async (bookId: number, bookName: string) => {
+        const confirmDelete = window.confirm(`Are you sure you want to delete book ${bookName}?`);
+        if (!confirmDelete) return;
+
+        try{
+            await deleteBook(bookId);
+            setBooks(books.filter((b) => b.bookId !== bookId));
+        }
+        catch (e) {
+            alert(`Error deleting book: ${(e as Error).message}`);
+        }
+            
+    }
 
     useEffect(() => {
         const fetchBooks = async () => {
@@ -43,6 +62,25 @@ function BookList({ selectedCategories, pageNumber, setPageNumber }: BookListPro
     }, [pageSize, pageNumber, sortByTitle, sortDirection, selectedCategories]);
 
 return (
+    <> 
+        {!showForm &&(
+            <button className="btn btn-success mb-3" onClick={() => setShowForm(true)}>Add New Book</button>
+        )}
+
+        {showForm &&(
+            <NewBookForm onSuccess={() => {
+                setShowForm(false);
+                fetchBooks(pageSize, pageNumber, []).then((data) => setBooks(data.books));
+            }} onCancel={() => setShowForm(false)} />
+        )}
+
+        {editingBook &&(
+            <EditBookForm book={editingBook} onSuccess={() => {
+                setEditingBook(null);
+                fetchBooks(pageSize, pageNumber, []).then((data) => setBooks(data.books));
+            }} onCancel = {() => setEditingBook(null)} />
+        )}
+    
     <div className="container py-4">
         <h1 className="mb-4 text-start">Book List</h1>
 
@@ -84,6 +122,22 @@ return (
                                         }}
                                     >
                                         Add to Cart
+                                    </button>
+                                    <button
+                                        className="btn btn-secondary mt-3"
+                                        onClick={() => {
+                                            setEditingBook(book);
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="btn btn-danger mt-3"
+                                        onClick={() => {
+                                            handleDelete(book.bookId, book.title);
+                                        }}
+                                    >
+                                        Delete
                                     </button>
                                 </div>
                             </div>
@@ -177,6 +231,7 @@ return (
             </>
         )}
     </div>
+    </>
     );
 }
 
