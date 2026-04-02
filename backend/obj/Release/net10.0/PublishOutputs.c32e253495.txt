@@ -1,6 +1,12 @@
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/backend
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/publish/web.config
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/appsettings.Development.json
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/appsettings.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/publish/appsettings.Development.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/publish/appsettings.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/publish/backend.deps.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/publish/backend.runtimeconfig.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/publish/backend.staticwebassets.endpoints.json
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/Bookstore.sqlite
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/backend.dll
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/publish/backend.deps.json

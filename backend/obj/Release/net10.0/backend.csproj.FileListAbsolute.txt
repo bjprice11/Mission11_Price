@@ -65,3 +65,9 @@
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/obj/Release/net10.0/backend.pdb
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/obj/Release/net10.0/backend.genruntimeconfig.cache
 /Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/obj/Release/net10.0/ref/backend.dll
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/bin/Release/net10.0/publish/web.config
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/bin/Release/net10.0/publish/appsettings.Development.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/bin/Release/net10.0/publish/appsettings.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/bin/Release/net10.0/publish/backend.deps.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/bin/Release/net10.0/publish/backend.runtimeconfig.json
+/Users/brandonprice/Desktop/Winter 2026/413/Mission11_Price/backend/bin/Release/net10.0/publish/backend.staticwebassets.endpoints.json

@@ -14,7 +14,15 @@ builder.Services.AddDbContext<BookDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("BookConnection")));
 
 //adds CORS to the container
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowPoilcy",policy =>
+    {
+        policy.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
 
 //builds the application
 var app = builder.Build();
@@ -25,7 +33,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 //allows the application to access the database
-app.UseCors(x => x.WithOrigins("http://localhost:3232"));
+app.UseCors("AllowPoilcy");
 //redirects to the https protocol
 app.UseHttpsRedirection();
 //allows the application to use authorization
