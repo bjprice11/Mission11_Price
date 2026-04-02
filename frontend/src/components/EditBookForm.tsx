@@ -2,25 +2,29 @@ import {useState} from 'react';
 import type { Book } from '../types/Books';
 import { updateBook } from '../api/BooksAPI';
 
+// This is the form for editing a book
+// The book is the book to be edited
 interface EditBookFormProps {
     book: Book;
     onSuccess: () => void;
     onCancel: () => void;
 }
 
+// This is the function for editing a book it takes the book being edited and the functions to call when the book is edited and cancelled
 const EditBookForm = ({ book, onSuccess, onCancel }: EditBookFormProps) => {
     const [formData, setFormData] = useState<Book>(book);
-
+    // This is the function for handling the change in the form
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({...formData, [e.target.name]: e.target.value});
 
     };
-
+    // This is the function for handling the submission of the form
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         await updateBook(formData.bookId, formData);
         onSuccess();
     };
+    // This is the return statement for the form
     return (
         <form onSubmit={handleSubmit}>
             <h2>Edit Book</h2>
