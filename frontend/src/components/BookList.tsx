@@ -29,6 +29,7 @@ function BookList({ selectedCategories, pageNumber, setPageNumber }: BookListPro
     const navigate = useNavigate();
     const { addToCart } = useCart();
 
+    // This is the function for handling the deletion of a book it takes the bookId and the book name
     const handleDelete = async (bookId: number, bookName: string) => {
         const confirmDelete = window.confirm(`Are you sure you want to delete book ${bookName}?`);
         if (!confirmDelete) return;
@@ -42,7 +43,7 @@ function BookList({ selectedCategories, pageNumber, setPageNumber }: BookListPro
         }
             
     }
-
+    // This is the function for fetching the books it takes the page size, page number, sort by title, sort direction, and selected categories
     useEffect(() => {
         const fetchBooks = async () => {
             setIsLoading(true);
@@ -63,27 +64,28 @@ function BookList({ selectedCategories, pageNumber, setPageNumber }: BookListPro
 
 return (
     <> 
+        {/* This is the button for adding a new book */}
         {!showForm &&(
             <button className="btn btn-success mb-3" onClick={() => setShowForm(true)}>Add New Book</button>
         )}
-
+        {/* This is the form for adding a new book */}
         {showForm &&(
             <NewBookForm onSuccess={() => {
                 setShowForm(false);
                 fetchBooks(pageSize, pageNumber, []).then((data) => setBooks(data.books));
             }} onCancel={() => setShowForm(false)} />
         )}
-
+        {/* This is the form for editing a book */}
         {editingBook &&(
             <EditBookForm book={editingBook} onSuccess={() => {
                 setEditingBook(null);
                 fetchBooks(pageSize, pageNumber, []).then((data) => setBooks(data.books));
             }} onCancel = {() => setEditingBook(null)} />
         )}
-    
+    {/* This is the container for the book list */}
     <div className="container py-4">
         <h1 className="mb-4 text-start">Book List</h1>
-
+        {/* This is the loading spinner */}
         {isLoading ? (
             <div className="d-flex justify-content-center my-5 py-5">
                 <div className="spinner-border text-primary" role="status" style={{ width: '3rem', height: '3rem' }}>
@@ -92,7 +94,9 @@ return (
             </div>
         ) : (
             <>
+                {/* This is the container for the book list */}
                 <div className="row g-3">
+                    {/* This is the map function for the books */}
                     {books.map((book) => (
                         <div key={book.bookId} className="col-12 col-md-6 col-lg-4">
                             <div className="card h-100 shadow-sm">
@@ -123,6 +127,7 @@ return (
                                     >
                                         Add to Cart
                                     </button>
+                                    {/* This is the button for editing a book */}
                                     <button
                                         className="btn btn-secondary mt-3"
                                         onClick={() => {
@@ -131,6 +136,7 @@ return (
                                     >
                                         Edit
                                     </button>
+                                    {/* This is the button for deleting a book */}
                                     <button
                                         className="btn btn-danger mt-3"
                                         onClick={() => {

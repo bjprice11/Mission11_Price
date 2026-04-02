@@ -77,6 +77,7 @@ public class BooksController : ControllerBase
             });
         }
     } 
+    //This is the method that gets the book categories from the database
     [HttpGet("GetBookCategories")]
      public IActionResult GetBookCategories()
      {
@@ -87,6 +88,7 @@ public class BooksController : ControllerBase
          return Ok(bookCategories);
     }
 
+    //This is the method that adds a book to the database
     [HttpPost("AddBook")]
     public IActionResult AddBook([FromBody] Book newBook){
         _context.Books.Add(newBook);
@@ -94,6 +96,7 @@ public class BooksController : ControllerBase
         return Ok(newBook);
     }
 
+    //This is the method that updates a book in the database
     [HttpPut("UpdateBook/{id}")]
     public IActionResult UpdateBook(int id, [FromBody] Book updatedBook){
     
@@ -111,6 +114,7 @@ public class BooksController : ControllerBase
         return Ok(existingBook);
     }
 
+    //This is the method that deletes a book from the database
     [HttpDelete("DeleteBook/{id}")]
     public IActionResult DeleteBook(int id) {
         var book = _context.Books.Find(id);

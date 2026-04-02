@@ -2,11 +2,16 @@ import {useState} from 'react';
 import type { Book } from '../types/Books';
 import { addBook } from '../api/BooksAPI';
 
+// This is the form for adding a new book
+// The onSuccess function is called when the book is added successfully
+// The onCancel function is called when the user cancels the addition of a new book
+
 interface NewBookFormProps {
     onSuccess: () => void;
     onCancel: () => void;
 }
 
+// This is the function for adding a new book it takes the onSuccess and onCancel functions, origianally it will be empty
 const NewBookForm = ({ onSuccess, onCancel }: NewBookFormProps) => {
     const [formData, setFormData] = useState<Book>({
         bookId: 0,
@@ -20,16 +25,18 @@ const NewBookForm = ({ onSuccess, onCancel }: NewBookFormProps) => {
         price: 0
     });
 
+    // This is the function for handling the change in the form
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({...formData, [e.target.name]: e.target.value});
 
     };
-
+    // This is the function for handling the submission of the form
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         await addBook(formData);
         onSuccess();
     };
+    // This is the return statement for the form
     return (
         <form onSubmit={handleSubmit}>
             <h2>Add New Book</h2>
